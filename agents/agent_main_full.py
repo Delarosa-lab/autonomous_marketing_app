@@ -72,3 +72,9 @@ texto_longo = gerar_roteiro_produto(produto_semanal)
 
 # Gera textos curtos para vídeos diários
 textos_curtos = [f"{produto_semanal['nome']} - dica rápida {i+1}" for i in range(5)]
+# Simulação de vendas dos vídeos/ebooks
+for i, texto in enumerate([texto_longo]+textos_curtos):
+    valor_venda = random.randint(20, 100)  # Simulação de valor de venda
+    origem = f"Venda {i+1} - {produto_semanal['nome']}"
+    registrar_venda(valor_venda, origem)
+    
