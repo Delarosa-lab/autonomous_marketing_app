@@ -48,3 +48,23 @@ def aprovar_video(nome_video: str):
 def aprovar_ebook(nome_ebook: str):
     return {"message": f"Ebook {nome_ebook} aprovado com sucesso"}
     
+from marketing_agent import marketing_aprovado, aprovar_marketing, gerar_relatorio
+
+# Listar vendas pendentes para marketing
+@app.get("/api/marketing/vendas")
+def listar_vendas():
+    return marketing_aprovado
+
+# Aprovar investimento de marketing
+@app.post("/api/marketing/aprovar/{indice}")
+def aprovar_investimento(indice: int):
+    if 0 <= indice < len(marketing_aprovado):
+        aprovar_marketing(indice)
+        return {"message": f"Investimento {indice} aprovado"}
+    return {"error": "Índice inválido"}
+
+# Gerar relatório
+@app.get("/api/marketing/relatorio/{periodo}")
+def relatorio_marketing(periodo: str):
+    gerar_relatorio(periodo)
+    return {"message": f"Relatório {periodo} gerado"}
