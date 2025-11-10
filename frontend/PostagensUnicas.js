@@ -4,7 +4,6 @@ import axios from "axios";
 const PostagensUnicas = () => {
   const [postagens, setPostagens] = useState([]);
 
-  // Carregar postagens pendentes do backend
   const carregarPostagens = () => {
     axios.get("http://127.0.0.1:8000/api/postagens")
       .then(res => setPostagens(res.data))
@@ -15,7 +14,6 @@ const PostagensUnicas = () => {
     carregarPostagens();
   }, []);
 
-  // Aprovação única de todas as postagens
   const aprovarTodas = () => {
     const promises = postagens.map((_, idx) =>
       axios.post(`http://127.0.0.1:8000/api/postagens/aprovar/${idx}`)
