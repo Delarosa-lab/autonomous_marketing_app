@@ -65,3 +65,4 @@ if __name__ == "__main__":
     gerar_relatorios_completos()
     
     print("Fluxo completo executado! Todo o conteúdo está pronto para publicação e análise.")
+from product_agent import buscar_produto_vencedor, gerar_roteiro_produto
