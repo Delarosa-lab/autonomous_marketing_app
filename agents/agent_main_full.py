@@ -66,3 +66,9 @@ if __name__ == "__main__":
     
     print("Fluxo completo executado! Todo o conteúdo está pronto para publicação e análise.")
 from product_agent import buscar_produto_vencedor, gerar_roteiro_produto
+# Seleciona produto vencedor da semana
+produto_semanal = buscar_produto_vencedor()
+texto_longo = gerar_roteiro_produto(produto_semanal)
+
+# Gera textos curtos para vídeos diários
+textos_curtos = [f"{produto_semanal['nome']} - dica rápida {i+1}" for i in range(5)]
