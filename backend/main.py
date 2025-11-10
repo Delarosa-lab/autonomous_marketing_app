@@ -68,3 +68,55 @@ def aprovar_investimento(indice: int):
 def relatorio_marketing(periodo: str):
     gerar_relatorio(periodo)
     return {"message": f"Relatório {periodo} gerado"}
+from datetime import datetime, timedelta
+
+# Estrutura de postagens agendadas
+postagens_agendadas = []
+
+# Listar postagens pendentes de aprovação
+@app.get("/api/postagens")
+def listar_postagens():
+    # Lê vídeos e ebooks do output
+    videos = [f for f in os.listdir("../output/videos") if f.endswith(".mp4")]
+    ebooks = [f for f in os.listdir("../output/ebooks") if f.endswith(".pdf")]
+    postagens = []
+
+    redes = ["Instagram", "TikTok", "Kwai"]
+    horarios = ["09:00", "12:00", "15:00", "18:00", "21:00"]
+
+    for rede in redes:
+        for i, video in enumerate(videos):
+            postagens.append({
+                "tipo": "vídeo",
+                "arquivo": video,
+                "rede_social": rede,
+                "horario_sugerido": horarios[i % len(horarios)],
+                "aprovado": False
+            })
+        for i, ebook in enumerate(ebooks):
+            postagens.append({
+                "tipo": "ebook",
+                "arquivo": ebook,
+                "rede_social": rede,
+                "horario_sugerido": horarios[i % len(horarios)],
+                "aprovado": False
+            })
+    return postagens
+
+# Aprovar e agendar postagem
+@app.post("/api/postagens/aprovar/{indice}")
+def aprovar_postagem(indice: int):
+    postagens = listar_postagens()
+    if 0 <= indice < len(postagens):
+        post = postagens[indice]
+        post["aprovado"] = True
+        # Define horário de publicação exato (futuro: integração real com API)
+        post["data_agendada"] = datetime.now().strftime("%Y-%m-%d") + " " + post["horario_sugerido"]
+        postagens_agendadas.append(post)
+        return {"message": f"Postagem aprovada e agendada: {post}"}
+    return {"error": "Índice inválido"}
+
+# Listar postagens agendadas
+@app.get("/api/postagens/agendadas")
+def listar_agendadas():
+    return postagens_agendadas
