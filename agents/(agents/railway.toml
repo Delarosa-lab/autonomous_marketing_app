@@ -1,0 +1,3 @@
+[build]
+build.command = "pip install -r ../backend/requirements.txt"
+start.command = "python agent_full_flow_corrected.py"
