@@ -73,3 +73,6 @@ def fluxo_completo_autonomo_com_aprovacao():
 
 if __name__ == "__main__":
     fluxo_completo_autonomo_com_aprovacao()
+[build]
+build.command = "pip install -r ../backend/requirements.txt"
+start.command = "python agent_full_flow_corrected.py"
