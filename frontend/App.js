@@ -30,3 +30,9 @@ function App() {
 
 export default App;
 npm install axios
+import Postagens from "./components/Postagens";
+
+<section className="mb-6">
+  <h2 className="text-xl font-semibold mb-2">Postagens Pendentes</h2>
+  <Postagens />
+</section>
