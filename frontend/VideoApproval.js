@@ -17,3 +17,34 @@ const VideoApproval = () => {
 };
 
 export default VideoApproval;
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+const VideoApproval = () => {
+  const [videos, setVideos] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/api/videos")
+      .then(res => setVideos(res.data))
+      .catch(err => console.log(err));
+  }, []);
+
+  const aprovar = (video) => {
+    axios.post(`http://127.0.0.1:8000/api/videos/aprovar/${video}`)
+      .then(() => alert(`Vídeo ${video} aprovado!`))
+      .catch(err => console.log(err));
+  }
+
+  return (
+    <div>
+      {videos.map((video, idx) => (
+        <div key={idx} className="flex items-center justify-between mb-2 p-2 border rounded">
+          <span>{video}</span>
+          <button onClick={() => aprovar(video)} className="bg-green-500 text-white px-2 py-1 rounded">Aprovar</button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default VideoApproval;
